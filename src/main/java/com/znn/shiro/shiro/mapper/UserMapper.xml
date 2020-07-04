@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.znn.shiro.shiro.mapper.UserMapper">
+    <!--由于JAVA命名和数据库命名规范有差别-->
+    <resultMap id="userResult" type="com.znn.shiro.shiro.domain.User">
+        <id property="id" column="id" javaType="int" jdbcType="INTEGER"/>
+        <result property="name" column="name" javaType="String" jdbcType="VARCHAR"/>
+        <result property="password" column="password" javaType="String" jdbcType="VARCHAR"/>
+        <result property="perms" column="perms" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+    <!--文件存放sql语句-->
+    <sql id="user_column">
+        id,name,password
+    </sql>
+    <sql id="user_column_perms">
+        id,name,password,perms
+    </sql>
+    <select id="findById" resultMap="userResult">
+        SELECT
+            <include refid="user_column_perms"/>
+        FROM
+            `user`
+        WHERE
+            id = #{value}
+    </select>
+    <select id="findByName" resultMap="userResult">
+        SELECT
+            <include refid="user_column"/>
+        FROM
+            `user`
+        WHERE
+            name = #{value}
+    </select>
+</mapper>
